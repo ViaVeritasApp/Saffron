@@ -110,3 +110,7 @@ yarn.lock
 package-lock.json
 
 pnpm-lock.yaml
+
+test/*.test.d.ts
+test/*.test.js
+test/*.test.js.mao

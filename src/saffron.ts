@@ -9,9 +9,8 @@ import {Source} from "./types/source.js";
 import {sleep} from "./utils/common.js";
 
 export type Options = {
-    mode: 'main' | 'worker';
-    sources?: Source<any>['options'];
     scheduler?: (app: Saffron) => Scheduler;
+    sources?: Source<any>['options'];
 };
 
 export class Saffron {
@@ -19,9 +18,10 @@ export class Saffron {
     private readonly extensions: ExtensionPair[] = [];
 
     constructor(
-        private readonly options: Options
+        private readonly options?: Options
     ) {
         // Default options
+        this.options ??= {};
         this.options.sources ??= {};
         this.options.sources.ignore_certificates ??= false;
         this.options.sources.delay_between_requests ??= 100;
@@ -38,26 +38,22 @@ export class Saffron {
      * @param reset
      */
     async start(reset: boolean = true) {
-        if (this.options.mode === 'main') {
-            if (!this.scheduler) {
-                this.scheduler = this.options.scheduler!(this);
-            }
-
-            await this.scheduler.start(reset);
+        if (!this.scheduler) {
+            this.scheduler = this.options!.scheduler!(this);
         }
+
+        await this.scheduler.start(reset);
     }
 
     /**
      * Stops the scheduler.
      */
     stop() {
-        if (this.options.mode === 'main') {
-            if (!this.scheduler) {
-                this.scheduler = this.options.scheduler!(this);
-            }
-
-            this.scheduler.stop();
+        if (!this.scheduler) {
+            this.scheduler = this.options!.scheduler!(this);
         }
+
+        this.scheduler.stop();
     }
 
     /**
@@ -80,14 +76,14 @@ export class Saffron {
 
         // Default from global options
         source.options ??= {};
-        source.options.ignore_certificates ??= this.options.sources?.ignore_certificates;
-        source.options.delay_between_requests ??= this.options.sources?.delay_between_requests;
+        source.options.ignore_certificates ??= this.options!.sources?.ignore_certificates;
+        source.options.delay_between_requests ??= this.options!.sources?.delay_between_requests;
         source.options.articles ??= {};
-        source.options.articles.amount ??= this.options.sources?.articles?.amount;
-        source.options.articles.extract_attachments_from_content ??= this.options.sources?.articles?.extract_attachments_from_content;
-        source.options.on_request_fail ??= this.options.sources?.on_request_fail;
-        source.options.dynamic_sources ??= this.options.sources?.dynamic_sources;
-        source.options.encoding ??= this.options.sources?.encoding;
+        source.options.articles.amount ??= this.options!.sources?.articles?.amount;
+        source.options.articles.extract_attachments_from_content ??= this.options!.sources?.articles?.extract_attachments_from_content;
+        source.options.on_request_fail ??= this.options!.sources?.on_request_fail;
+        source.options.dynamic_sources ??= this.options!.sources?.dynamic_sources;
+        source.options.encoding ??= this.options!.sources?.encoding;
 
         // Parse source url
         const urls: { url: string; categories: string[] }[] = [];

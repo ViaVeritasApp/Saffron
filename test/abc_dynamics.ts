@@ -1,7 +1,4 @@
-import {RssParser} from "../src/parsers/index.js";
-import {Article} from "../src/types/article.js";
-import {Parser} from "../src/types/parser.js";
-import {Source} from "../src/types/source.js";
+import {Article, Parser, RssParser, Source} from "../src/index.js";
 
 export class Dynamic1 extends Parser<any> {
     get name(): string {

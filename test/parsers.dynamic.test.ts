@@ -2,7 +2,7 @@ import {getApp, initializeApp} from "../src/index.js";
 import {expect} from "chai";
 import {Dynamic1} from "./abc_dynamics.js";
 
-initializeApp({mode: 'main'})
+initializeApp({})
 
 describe("Dynamic parser", function () {
     it('Test 1', function () {

@@ -22,12 +22,15 @@ export abstract class Parser<I> {
     public dynamicSourceFile!: Parser<I>;
     public source!: Source<I>;
 
+    /**
+     * The name of the dynamic parser. Must be unique
+     */
     public get name(): string {
         return this.source.name;
     }
 
     /**
-     * A function that will validate if the scrape field is correct.
+     * A function that will validate if the instruction field is correct.
      * It must throw an error if the data are incorrect.
      * @param data
      */
@@ -44,6 +47,7 @@ export abstract class Parser<I> {
 
     /**
      * A function that will handle and asynchronous request to the source.
+     * Defaults to a GET request.
      * @param source
      */
     public request(source: Source<I>): Promise<any> {
