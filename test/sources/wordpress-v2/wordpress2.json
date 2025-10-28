@@ -1,0 +1,16 @@
+{
+    "url": "http://127.0.0.1:3000/wp2",
+    "name": "wp2-source",
+    "parser": "wordpress-v2",
+    "options": {
+        "ignore_certificates": true
+    },
+    "instructions": {
+        "paths": {
+            "posts": "/wp-json/wp/v2/articles/"
+        },
+        "articles": {
+            "thumbnail": "medium_large"
+        }
+    }
+}

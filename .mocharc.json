@@ -1,0 +1,16 @@
+{
+    "extensions": ["ts"],
+    "spec": [
+        "test/abc_webserver.test.ts",
+        "test/other.test.ts",
+        "test/parsers.dynamic.test.ts",
+        "test/parsers.html.test.ts",
+        "test/parsers.json.test.ts",
+        "test/parsers.rss.test.ts",
+        "test/parsers.wordpress.test.ts",
+        "test/parsers.xml.test.ts"
+    ],
+    "recursive": false,
+    "timeout": 5000,
+    "exit": true
+}

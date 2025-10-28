@@ -1,0 +1,43 @@
+{
+    "url": [
+        {
+            "url": "http://127.0.0.1:3000/html1",
+            "categories": ["Γενικές Ανακοινώσεις"]
+        }
+    ],
+    "name": "html1-source",
+    "parser": "html",
+    "options": {
+        "ignore_certificates": true
+    },
+    "instructions": {
+        "container": ".catItemView",
+        "article": {
+            "url": {
+                "class": ".catItemTitle",
+                "find": ["a"],
+                "attributes": ["href"],
+                "multiple": false
+            },
+            "publication_date": {
+                "class": ".catItemDateCreated",
+                "multiple": false
+            },
+            "title": {
+                "class": ".catItemTitle",
+                "find": ["a"],
+                "multiple": false
+            },
+            "content": {
+                "class": ".catItemIntroText",
+                "multiple": false
+            },
+            "attachments": {
+                "class": ".catItemLinks",
+                "attributes": ["value", "href"],
+                "find": [".catItemAttachmentsBlock", "li", "a"],
+                "multiple": true
+            }
+        }
+    }
+}

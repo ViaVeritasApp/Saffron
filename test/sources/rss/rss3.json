@@ -1,0 +1,14 @@
+{
+    "url": "http://127.0.0.1:3000/rss3",
+    "name": "rss3-source",
+    "parser": "rss",
+    "instructions": {
+        "extra_fields": [
+            "dc:creator"
+        ],
+        "assign_fields": {
+            "title": "link",
+            "test": "title"
+        }
+    }
+}

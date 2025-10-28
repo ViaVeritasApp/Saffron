@@ -1,0 +1,60 @@
+{
+    "url": "http://127.0.0.1:3000/html4",
+    "name": "html5-source",
+    "parser": "html",
+    "options": {
+        "encoding": "iso-8859-7"
+    },
+    "instructions": {
+        "container": "#page-content > .news_container",
+        "skip": [
+            {"position": 1},
+            {
+                "text": "Υποδοχή Πρωτοετών ΕΜΠ - με μουσική και χορό - 24/10/2022",
+                "type": "contains"
+            },
+            {
+                "selector": "div.news_title_container > div.news_date",
+                "text": "Tuesday, 25 Οκτωβρίου 2022 - Ανακοινώσεις Προπτυχιακών",
+                "type": "exact"
+            },
+            {
+                "selector": "div.news_title_container > div.news_title",
+                "text": "μαθήματος Μηχανουργικές Κατεργασίες",
+                "type": "contains"
+            },
+            {
+                "selector": "div.news_title_container > div.news_title > a",
+                "attribute": "href",
+                "text": "programma_kleistis_aithoysas_athlopaidiwn_2022___2023",
+                "type": "contains"
+            }
+        ],
+        "article": {
+            "url": {
+                "class": ".news_title",
+                "find": ["a"],
+                "attributes": ["href"],
+                "multiple": false
+            },
+            "publication_date": {
+                "class": ".news_date",
+                "multiple": false
+            },
+            "title": {
+                "class": ".news_title",
+                "multiple": false
+            },
+            "content": {
+                "class": ".news_main",
+                "multiple": false
+            },
+            "attachments": {
+                "class": ".news_main",
+                "find": ["a"],
+                "attributes": ["href"],
+                "multiple": true
+            }
+        }
+    }
+}
