@@ -84,6 +84,7 @@ export class Saffron {
         source.options.on_request_fail ??= this.options!.sources?.on_request_fail;
         source.options.dynamic_sources ??= this.options!.sources?.dynamic_sources;
         source.options.encoding ??= this.options!.sources?.encoding;
+        source.options.preprocessor ??= this.options!.sources?.preprocessor;
 
         // Parse source url
         const urls: { url: string; categories: string[] }[] = [];
