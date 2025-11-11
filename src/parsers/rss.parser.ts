@@ -86,6 +86,8 @@ export class RssParser extends Parser<RssInstructions> {
             article.content = cleanupHTMLText(data.content ?? "", false);
             article.url = cleanupHTMLText(data.link ?? data.url ?? "", false);
             article.publication_date = cleanupHTMLText(data.pubDate ?? data.publication_date ?? "", false);
+            article.author_name = cleanupHTMLText(data.author ?? data.creator ?? data.author_name, true);
+            article.author_image_url = cleanupHTMLText(data.author_image_url, false);
 
             article.thumbnail_url = data.thumbnail ?? data.thumbnail_url
                 ?? this.getUrlFromMedia(data, 'media:thumbnail')

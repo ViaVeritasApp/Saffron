@@ -13,7 +13,6 @@ type Options = {
     exclude?: string[];
 
     interval?: number;
-    no_response_threshold?: number;
     randomizeInterval?: () => number;
 };
 
@@ -46,7 +45,6 @@ export class LinearScheduler extends Scheduler {
         this.options.exclude ??= [];
 
         this.options.interval ??= 3600000;
-        this.options.no_response_threshold ??= 2;
         this.options.randomizeInterval ??= () => {
             const high = 300;
             const low = 0;
@@ -80,7 +78,7 @@ export class LinearScheduler extends Scheduler {
                 // Subtract the elapsed time
                 job.remaining_time -= this.checkInterval;
 
-                if(job.remaining_time <= 0) {
+                if(job.remaining_time <= 0 && job.status === 'pending') {
                     job.status = 'running';
 
                     this.saffron.scrape(job.source)
