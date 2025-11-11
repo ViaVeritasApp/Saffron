@@ -20,6 +20,7 @@ type Options = {
 type Job = {
     source: Source<any>;
     remaining_time: number;
+    status: 'pending' | 'running';
 }
 
 export class LinearScheduler extends Scheduler {
@@ -80,18 +81,23 @@ export class LinearScheduler extends Scheduler {
                 job.remaining_time -= this.checkInterval;
 
                 if(job.remaining_time <= 0) {
-                    try {
-                        const result = await this.saffron.scrape(job.source);
-                        this.fire('success', job.source, result, null);
+                    job.status = 'running';
 
-                        // Reset remaining time
-                        job.remaining_time = this.options!.interval!;
-                    } catch (e) {
-                        this.fire('error', job.source, [], e);
+                    this.saffron.scrape(job.source)
+                        .then(result => {
+                            this.fire('success', job.source, result, null);
 
-                        // Rerun in half the time
-                        job.remaining_time = this.options!.interval! / 2;
-                    }
+                            // Reset remaining time
+                            job.remaining_time = this.options!.interval!;
+                            job.status = 'pending';
+                        })
+                        .catch(e => {
+                            this.fire('error', job.source, [], e);
+
+                            // Rerun in half the time
+                            job.remaining_time = this.options!.interval! / 2;
+                            job.status = 'pending';
+                        });
                 }
             }
 
@@ -158,6 +164,7 @@ export class LinearScheduler extends Scheduler {
             this.jobs.push({
                 source,
                 remaining_time: separationInterval * sI++,
+                status: 'pending'
             });
         }
     }
