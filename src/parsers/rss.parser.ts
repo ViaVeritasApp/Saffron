@@ -84,15 +84,17 @@ export class RssParser extends Parser<RssInstructions> {
 
             article.title = cleanupHTMLText(data.title ?? "", true);
             article.content = cleanupHTMLText(data.content ?? "", false);
-            article.url = cleanupHTMLText(data.link ?? "", false);
-            article.publication_date = cleanupHTMLText(data.pubDate ?? "", false);
+            article.url = cleanupHTMLText(data.link ?? data.url ?? "", false);
+            article.publication_date = cleanupHTMLText(data.pubDate ?? data.publication_date ?? "", false);
 
-            delete data.link;
-            delete data.pubDate;
-
-            article.thumbnail_url = data.thumbnail
+            article.thumbnail_url = data.thumbnail ?? data.thumbnail_url
                 ?? this.getUrlFromMedia(data, 'media:thumbnail')
                 ?? this.getUrlFromMedia(data, 'media:content');
+
+            // So they will not be assigned to extra
+            delete data.link;
+            delete data.pubDate;
+            delete data.thumbnail;
 
             if (data.categories) {
                 for (const c of data.categories) {

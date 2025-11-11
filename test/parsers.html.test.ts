@@ -17,7 +17,7 @@ describe("HTML parser", function () {
                 expect(article.extra['__categories']).to.not.be.undefined;
                 const cat = article.extra['__categories'].find((cat: any) => cat.name === 'Γενικές Ανακοινώσεις');
                 expect(cat).to.not.be.undefined;
-                expect(cat.links).to.deep.equal(['http://127.0.0.1:3000/html1']);
+                expect(cat.links).to.deep.equal(['http://127.0.0.1:3123/html1']);
             }
 
             const article = articles[0];
@@ -49,7 +49,7 @@ describe("HTML parser", function () {
                     "\\t\\t\\t\\tΠΡΟΠΤΥΧΙΑΚΟ ΤΟΜΕΑ Β' ΙΔΙΩΤΙΚΟΥ ΔΙΚΑΙΟΥ",
                 ].includes(article.categories[0].name)).to.be.true;
                 expect(article.categories[0].links.length).to.equal(1);
-                expect(article.categories[0].links[0]).to.equal('http://127.0.0.1:3000/html2');
+                expect(article.categories[0].links[0]).to.equal('http://127.0.0.1:3123/html2');
             }
 
             const article = articles[0];
@@ -71,7 +71,7 @@ describe("HTML parser", function () {
                 expect(article.extra['__categories'].length).to.equal(1);
                 expect(article.extra['__categories'][0].name).to.equal('Νέα');
                 expect(article.extra['__categories'][0].links.length).to.equal(1);
-                expect(article.extra['__categories'][0].links[0]).to.equal('http://127.0.0.1:3000/html3');
+                expect(article.extra['__categories'][0].links[0]).to.equal('http://127.0.0.1:3123/html3');
             }
 
             const article = articles[0];
@@ -93,7 +93,7 @@ describe("HTML parser", function () {
                 expect(article.extra['__categories'].length).to.equal(1);
                 expect(article.extra['__categories'][0].name).to.equal('Γενικές Ανακοινώσεις');
                 expect(article.extra['__categories'][0].links.length).to.equal(1);
-                expect(article.extra['__categories'][0].links[0]).to.equal('http://127.0.0.1:3000/html4');
+                expect(article.extra['__categories'][0].links[0]).to.equal('http://127.0.0.1:3123/html4');
             }
 
             const article = articles[0];

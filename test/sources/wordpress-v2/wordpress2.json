@@ -1,5 +1,5 @@
 {
-    "url": "http://127.0.0.1:3000/wp2",
+    "url": "http://127.0.0.1:3123/wp2",
     "name": "wp2-source",
     "parser": "wordpress-v2",
     "options": {

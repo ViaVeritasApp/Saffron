@@ -1,5 +1,5 @@
 {
-    "url": "http://127.0.0.1:3000/wp2/wp-json/wp/v2/articles",
+    "url": "http://127.0.0.1:3123/wp2/wp-json/wp/v2/articles",
     "name": "json1-source",
     "parser": "json",
     "options": {

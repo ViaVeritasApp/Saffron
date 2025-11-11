@@ -7,7 +7,7 @@ initializeApp({})
 describe("Dynamic parser", function () {
     it('Test 1', function () {
         return getApp().scrape({
-            url: 'http://127.0.0.1:3000/rss1',
+            url: 'http://127.0.0.1:3123/rss1',
             name: 'dynamic1-source',
             parser: 'dynamic',
             options: {
