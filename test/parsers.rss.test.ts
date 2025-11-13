@@ -4,7 +4,8 @@ import {expect} from "chai";
 
 describe("RSS parser", function () {
     it('Test 1', function () {
-        return getApp().scrape(JSON.parse(fs.readFileSync('./test/sources/rss/rss1.json', 'utf-8'))).then(articles => {
+        return getApp().scrape(JSON.parse(fs.readFileSync('./test/sources/rss/rss1.json', 'utf-8'))).then(result => {
+            const articles = result.articles;
             expect(articles.length).to.equal(7);
 
             for (const article of articles) {
@@ -23,7 +24,8 @@ describe("RSS parser", function () {
     });
 
     it('Test 2', function () {
-        return getApp().scrape(JSON.parse(fs.readFileSync('./test/sources/rss/rss2.json', 'utf-8'))).then(articles => {
+        return getApp().scrape(JSON.parse(fs.readFileSync('./test/sources/rss/rss2.json', 'utf-8'))).then(result => {
+            const articles = result.articles;
             expect(articles.length).to.equal(10);
 
             for (const article of articles) {
@@ -43,7 +45,8 @@ describe("RSS parser", function () {
     });
 
     it('Test 3', function () {
-        return getApp().scrape(JSON.parse(fs.readFileSync('./test/sources/rss/rss3.json', 'utf-8'))).then(articles => {
+        return getApp().scrape(JSON.parse(fs.readFileSync('./test/sources/rss/rss3.json', 'utf-8'))).then(result => {
+            const articles = result.articles;
             expect(articles.length).to.equal(10);
 
             for (const article of articles) {

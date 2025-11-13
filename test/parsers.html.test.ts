@@ -5,7 +5,8 @@ import fs from "node:fs"
 
 describe("HTML parser", function () {
     it('Test 1', function () {
-        return getApp().scrape(JSON.parse(fs.readFileSync('./test/sources/html/html1.json', 'utf-8'))).then(articles => {
+        return getApp().scrape(JSON.parse(fs.readFileSync('./test/sources/html/html1.json', 'utf-8'))).then(result => {
+            const articles = result.articles;
             expect(articles.length).to.equal(10);
 
             for (const article of articles) {
@@ -32,7 +33,8 @@ describe("HTML parser", function () {
     });
 
     it('Test 2', function () {
-        return getApp().scrape(JSON.parse(fs.readFileSync('./test/sources/html/html2.json', 'utf-8'))).then(articles => {
+        return getApp().scrape(JSON.parse(fs.readFileSync('./test/sources/html/html2.json', 'utf-8'))).then(result => {
+            const articles = result.articles;
             expect(articles.length).to.equal(10);
 
             for (const article of articles) {
@@ -63,7 +65,8 @@ describe("HTML parser", function () {
     });
 
     it('Test 3', function () {
-        return getApp().scrape(JSON.parse(fs.readFileSync('./test/sources/html/html3.json', 'utf-8'))).then(articles => {
+        return getApp().scrape(JSON.parse(fs.readFileSync('./test/sources/html/html3.json', 'utf-8'))).then(result => {
+            const articles = result.articles;
             expect(articles.length).to.equal(20);
 
             for (const article of articles) {
@@ -85,7 +88,8 @@ describe("HTML parser", function () {
     });
 
     it('Test 4', function () {
-        return getApp().scrape(JSON.parse(fs.readFileSync('./test/sources/html/html4.json', 'utf-8'))).then(articles => {
+        return getApp().scrape(JSON.parse(fs.readFileSync('./test/sources/html/html4.json', 'utf-8'))).then(result => {
+            const articles = result.articles;
             expect(articles.length).to.equal(10);
 
             for (const article of articles) {
@@ -107,7 +111,8 @@ describe("HTML parser", function () {
     });
 
     it('Option: skip', function () {
-        return getApp().scrape(JSON.parse(fs.readFileSync('./test/sources/html/html5.json', 'utf-8'))).then(articles => {
+        return getApp().scrape(JSON.parse(fs.readFileSync('./test/sources/html/html5.json', 'utf-8'))).then(result => {
+            const articles = result.articles;
             expect(articles.length).to.equal(5);
 
             for (const article of articles) {

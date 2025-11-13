@@ -4,7 +4,8 @@ import {getApp} from "../src/index.js";
 
 describe("JSON parser", function () {
     it('Test 1', function () {
-        return getApp().scrape(JSON.parse(fs.readFileSync('./test/sources/json/json1.json', 'utf-8'))).then(articles => {
+        return getApp().scrape(JSON.parse(fs.readFileSync('./test/sources/json/json1.json', 'utf-8'))).then(result => {
+            const articles = result.articles;
             expect(articles.length).to.equal(8);
 
             for (const article of articles) {

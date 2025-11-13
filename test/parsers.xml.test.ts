@@ -4,7 +4,8 @@ import fs from "node:fs";
 
 describe("XML parser", function () {
     it('Test 1', function () {
-        return getApp().scrape(JSON.parse(fs.readFileSync('./test/sources/xml/xml1.json', 'utf-8'))).then(articles => {
+        return getApp().scrape(JSON.parse(fs.readFileSync('./test/sources/xml/xml1.json', 'utf-8'))).then(result => {
+            const articles = result.articles;
             expect(articles.length).to.equal(5);
 
             for (const article of articles) {

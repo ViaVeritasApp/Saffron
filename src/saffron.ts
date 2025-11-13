@@ -107,6 +107,8 @@ export class Saffron {
         source.instructions = parser.preprocess(source.instructions);
 
         let result: Article[] = []
+        let errors: any[] = [];
+
         for (let i = 0; i < urls.length; i++) {
             const pair = urls[i];
             parser.url = pair.url;
@@ -147,6 +149,7 @@ export class Saffron {
 
                 result.push(...articles);
             } catch (e) {
+                errors.push(e);
                 if (source.options.on_request_fail === 'fail') {
                     throw e;
                 }
@@ -164,6 +167,9 @@ export class Saffron {
             }
         }
 
-        return result;
+        return {
+            articles: result,
+            errors
+        };
     }
 }

@@ -83,7 +83,13 @@ export class LinearScheduler extends Scheduler {
 
                     this.saffron.scrape(job.source)
                         .then(result => {
-                            this.fire('success', job.source, result, null);
+                            if(result.articles) {
+                                this.fire('success', job.source, result.articles, null);
+                            }
+
+                            if(result.errors.length) {
+                                this.fire('error', job.source, [], result.errors);
+                            }
 
                             // Reset remaining time
                             job.remaining_time = this.options!.interval!;

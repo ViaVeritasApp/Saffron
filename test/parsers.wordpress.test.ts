@@ -4,7 +4,8 @@ import {getApp} from "../src/index.js";
 
 describe("WordPress parser", function () {
     it('Test 1', function () {
-        return getApp().scrape(JSON.parse(fs.readFileSync('./test/sources/wordpress-v2/wordpress1.json', 'utf-8'))).then(articles => {
+        return getApp().scrape(JSON.parse(fs.readFileSync('./test/sources/wordpress-v2/wordpress1.json', 'utf-8'))).then(result => {
+            const articles = result.articles;
             expect(articles.length).to.equal(30);
 
             for (const article of articles) {
@@ -34,7 +35,8 @@ describe("WordPress parser", function () {
     });
 
     it('Test 2', function () {
-        return getApp().scrape(JSON.parse(fs.readFileSync('./test/sources/wordpress-v2/wordpress2.json', 'utf-8'))).then(articles => {
+        return getApp().scrape(JSON.parse(fs.readFileSync('./test/sources/wordpress-v2/wordpress2.json', 'utf-8'))).then(result => {
+            const articles = result.articles;
             expect(articles.length).to.equal(10);
 
             for (const article of articles) {

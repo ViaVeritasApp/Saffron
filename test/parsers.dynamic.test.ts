@@ -17,7 +17,9 @@ describe("Dynamic parser", function () {
             instructions: {
                 implementation: 'dynamic-1'
             }
-        }).then(articles => {
+        }).then(result => {
+            const articles = result.articles;
+
             expect(articles.length).to.equal(7);
             for (const article of articles) {
                 expect(article.source).to.equal('dynamic1-source');
