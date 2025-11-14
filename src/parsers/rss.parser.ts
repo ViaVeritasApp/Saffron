@@ -9,7 +9,7 @@ import {extractLinks} from "../utils/html.js";
 export type RssInstructions = {
     extra_fields: string[];
     assign_fields: {
-        [assign: string]: string;
+        [assign: string]: string | string[];
     };
 }
 
@@ -29,6 +29,11 @@ export class RssParser extends Parser<RssInstructions> {
 
             if (typeof scrape.assign_fields !== 'undefined' && (typeof scrape.assign_fields !== 'object' || Array.isArray(scrape.assign_fields)))
                 throw new Error('assignFields must be a JSON object');
+
+            for(const key in scrape.assign_fields) {
+                if (typeof scrape.assign_fields[key] !== 'string' && !Array.isArray(scrape.assign_fields[key]))
+                    throw new Error(`assignFields.${key} must be a string or an array of strings`);
+            }
         }
     }
 
@@ -46,7 +51,7 @@ export class RssParser extends Parser<RssInstructions> {
         const extraFields = instructions.extra_fields;
 
         // Default fields & extra fields
-        const requestFields: string[] = ["title", "link", "content", "pubDate", "categories", "media:thumbnail", 'media:content', ...extraFields];
+        const requestFields: string[] = ["title", "link", "content", "pubDate", "categories", "media:thumbnail", 'media:content', 'dc:creator', ...extraFields];
         const parser = new rssParser({
             customFields: {
                 // Make sure to request all the mentioned fields
@@ -73,7 +78,16 @@ export class RssParser extends Parser<RssInstructions> {
 
             // Assign all renamed fields to data object
             for (const customField in assignFields) {
-                data[customField] = item[assignFields[customField]];
+                const key = assignFields[customField];
+                if(typeof key === 'string') {
+                    data[customField] = item[key];
+                } else if(key.length > 0) {
+                    let nd: any = item[key[0]]
+                    for(let i = 1; i < key.length; i++) {
+                        nd = nd[key[i]];
+                    }
+                    data[customField] = nd;
+                }
             }
 
             const article = {
@@ -86,7 +100,7 @@ export class RssParser extends Parser<RssInstructions> {
             article.content = cleanupHTMLText(data.content ?? "", false);
             article.url = cleanupHTMLText(data.link ?? data.url ?? "", false);
             article.publication_date = cleanupHTMLText(data.pubDate ?? data.publication_date ?? "", false);
-            article.author_name = cleanupHTMLText(data.author ?? data.creator ?? data.author_name, true);
+            article.author_name = cleanupHTMLText(data.author ?? data.author_name ?? data.creator ?? data['dc:creator'], true);
             article.author_image_url = cleanupHTMLText(data.author_image_url, false);
 
             article.thumbnail_url = data.thumbnail ?? data.thumbnail_url
