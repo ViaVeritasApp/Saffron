@@ -23,7 +23,6 @@ export * from "./parsers/index.js";
 
 // TODO: Add mode debug - Will act as main, and will verbose a lot of data
 
-
 // TODO: Add source file templates
 //   A template folder, where a source file can extend to. Will contain the same fields
 //   as a source file, but not all fields are required.
