@@ -42,7 +42,15 @@ export abstract class Scheduler {
         this.listeners = [];
     }
 
-    protected fire(event: 'success' | 'error', source: Source<any>, articles: any[], error: any) {
+    /**
+     * Fire an event to all the listeners.
+     * @param event The event to fire.
+     * @param source The source that was scraped.
+     * @param articles The articles that were scraped.
+     * @param error The error that occurred during the scraping. If there was no error, then it will be null.
+     * @protected
+     */
+    protected fire(event: 'success' | 'error', source: Source<any>, articles: any[], error: any | null) {
         for(const listener of this.listeners) {
             if(listener.event === event) {
                 listener.callback(source, articles, error);

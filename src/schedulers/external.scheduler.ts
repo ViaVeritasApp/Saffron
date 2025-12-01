@@ -3,11 +3,27 @@ import {Scheduler} from "../types/scheduler.js";
 import {Source} from "../types/source.js";
 
 type Options = {
+    /**
+     * A function that will return a list of sources to scrape.
+     * @param reset
+     */
     request: (reset: boolean) => Promise<{ items: Source<any>[] }>;
+    /**
+     * The interval between each source scraping.
+     * Defaults to 30 minutes (1000 * 60 * 30)
+     */
     request_interval?: number;
+    /**
+     * If set to true, it will wait until the request function finishes before starting the next one.
+     * Defaults to true
+     */
     wait_to_finish?: boolean;
 };
 
+/**
+ * A scheduler that will run all the sources based on a request function.
+ * It will run the request function every `request_interval` milliseconds.
+ */
 export class ExternalScheduler extends Scheduler {
     declare interval: NodeJS.Timeout
 

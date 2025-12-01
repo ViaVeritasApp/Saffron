@@ -2,12 +2,21 @@ import {Options, Saffron} from "./saffron.js";
 
 const apps = new Map<string, Saffron>();
 
+/**
+ * Initialize a new Saffron app.
+ * @param options
+ * @param name
+ */
 export function initializeApp(options: Options, name: string = 'default'): Saffron {
     apps.set(name, new Saffron(options));
 
     return apps.get(name)!;
 }
 
+/**
+ * Get an existing Saffron app.
+ * @param name
+ */
 export function getApp(name: string = 'default'): Saffron {
     if(apps.has(name)) return apps.get(name)!;
     throw new Error(`app '${name}' not found`);

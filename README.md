@@ -114,6 +114,10 @@ const app = initializeApp({
 app.start();
 ```
 
+Available schedulers:
+- LinearScheduler: will run all the sources in a linear fashion
+- ExternalScheduler: will run all the sources based on a request function
+
 ### `sources`
 
 #### `ignore_certificates`
@@ -330,7 +334,7 @@ These files are generated from the user and guide Saffron on how to parse a webs
 
 The source file type is as follows:
 ```ts
-export type Source<I> = {
+type Source<I> = {
   // The unqiue name of the source.
   name: string;
   // The url(s) of the source.
@@ -403,7 +407,7 @@ type Instructions = {
 #### RSS Instructions
 
 ```ts
-export type RssInstructions = {
+type RssInstructions = {
   extra_fields: string[];
   assign_fields: {
     [assign: string]: string;
@@ -498,12 +502,12 @@ It gets as parameter every article that was found from the parsers and must retu
 
 ```javascript
 app.use("article.format", (article: Article, source: Source<any>) => {
-    // If possible set pubDate with milliseconds.
-    let ms = new Date(article.pubDate).getTime();
-    if (!isNaN(ms)) article.pubDate = ms;
+    // If possible set publication_date with milliseconds.
+    let ms = new Date(article.publication_date).getTime();
+    if (!isNaN(ms)) article.publication_date = ms;
 
     // Append source name before title for every article
-    article.title = `[${article.getSource(saffron).name}] ${article.title}`;
+    article.title = `[${source.name}] ${article.title}`;
 
     // Return the changed article.
     return article;
@@ -524,6 +528,8 @@ app.use("articles", (articles: Article[], source: Source<any>) => {
 });
 ```
 
+Note that any changes made on the source object will also affect the saved source.
+
 ## Standalone
 
 Saffron supports immediate parsing using the static function `scrape`.
@@ -542,7 +548,7 @@ try {
         instructions: {
             // ...
         },
-    }, null); // or pass a config
+    });
 
     console.log("Result:", articles);
 } catch (e) {

@@ -6,13 +6,41 @@ import {Source} from "../types/source.js";
 import {glob} from "glob";
 
 type Options = {
+    /**
+     * The path where the sources are located.
+     * Defaults to './sources'
+     */
     path?: string;
+    /**
+     * If set to true, it will scan all the subfolders of the path.
+     * Defaults to true
+     */
     scan_sub_folders?: boolean;
+    /**
+     * A function that will load the source from the filepath.
+     * Defaults to (filepath: string) => JSON.parse(fs.readFileSync(filepath, 'utf-8'))
+     * @param filepath
+     */
     loader?: (filepath: string) => Promise<any>;
+    /**
+     * A list of sources to include. If set, it will only include the sources that are in this list.
+     * Defaults to []
+     */
     include_only?: string[];
+    /**
+     * A list of sources to exclude. If set, it will exclude the sources that are in this list.
+     * Defaults to []
+     */
     exclude?: string[];
-
+    /**
+     * The interval between each source scraping.
+     * Defaults to 3600000 (1 hour)
+     */
     interval?: number;
+    /**
+     * A function that will return a random number and will append it to the interval.
+     * Defaults to () => { const high = 300; const low = 0; return Math.floor(Math.random() * (high - low) + low) * 1000; }
+     */
     randomizeInterval?: () => number;
 };
 
@@ -22,6 +50,10 @@ type Job = {
     status: 'pending' | 'running';
 }
 
+/**
+ * A scheduler that will run all the sources in a linear fashion.
+ * It will run each source every `interval` milliseconds.
+ */
 export class LinearScheduler extends Scheduler {
     private readonly checkInterval = 1000;
 
