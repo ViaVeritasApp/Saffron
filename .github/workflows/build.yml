@@ -30,7 +30,7 @@ jobs:
           node-version: 22
           registry-url: 'https://registry.npmjs.org'
       - run: npm install -g npm@latest   # trusted publishing needs npm >= 11.5.1; Node 22 ships npm 10.x
-      - run: npm ci
+      - run: npm install
       - run: npm run clean
       - run: npm run build
       - run: npm publish --access public
