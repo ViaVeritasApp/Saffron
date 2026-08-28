@@ -62,11 +62,6 @@ export abstract class Parser<I> {
     abstract parse(source: Source<I>, result: any): Promise<Article[]>;
 
     async _request(options: AxiosRequestConfig): Promise<AxiosResponse> {
-        if (this.source.options?.ignore_certificates)
-            options.httpsAgent = new https.Agent({
-                rejectUnauthorized: false
-            });
-
         let axiosConfig = this.source.options?.axios;
         if(axiosConfig) {
             if(typeof axiosConfig === 'function') {
@@ -74,7 +69,19 @@ export abstract class Parser<I> {
             }
 
             options = deepmerge(options, axiosConfig);
+
+            // deepmerge() walks into every plain object, which would turn an agent
+            // instance into a lifeless copy of its own fields. Re-attach them by reference.
+            if (axiosConfig.httpAgent) options.httpAgent = axiosConfig.httpAgent;
+            if (axiosConfig.httpsAgent) options.httpsAgent = axiosConfig.httpsAgent;
         }
+
+        // An agent supplied through `options.axios` already carries its own TLS
+        // settings, so it is left alone.
+        if (this.source.options?.ignore_certificates && !options.httpsAgent)
+            options.httpsAgent = new https.Agent({
+                rejectUnauthorized: false
+            });
 
         options.responseType = 'arraybuffer';
         options.responseEncoding = 'binary';

@@ -77,6 +77,7 @@ export class Saffron {
         // Default from global options
         source.options ??= {};
         source.options.ignore_certificates ??= this.options!.sources?.ignore_certificates;
+        source.options.axios ??= this.options!.sources?.axios;
         source.options.delay_between_requests ??= this.options!.sources?.delay_between_requests;
         source.options.articles ??= {};
         source.options.articles.amount ??= this.options!.sources?.articles?.amount;
