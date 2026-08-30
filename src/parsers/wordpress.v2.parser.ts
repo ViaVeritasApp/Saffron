@@ -144,6 +144,7 @@ export class WordpressV2Parser extends Parser<Instructions> {
         data.articles.filter.tags_exclude ??= undefined;
         data.articles.filter.sticky ??= undefined;
 
+        if (!data.articles.disable_thumbnail)
         data.articles.thumbnail ??= 'thumbnail';
 
         return data;

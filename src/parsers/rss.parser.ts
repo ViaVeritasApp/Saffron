@@ -83,7 +83,7 @@ export class RssParser extends Parser<RssInstructions> {
                     data[customField] = item[key];
                 } else if(key.length > 0) {
                     let nd: any = item[key[0]]
-                    for(let i = 1; i < key.length; i++) {
+                    for(let i = 1; i < key.length && nd != null; i++) {
                         nd = nd[key[i]];
                     }
                     data[customField] = nd;
